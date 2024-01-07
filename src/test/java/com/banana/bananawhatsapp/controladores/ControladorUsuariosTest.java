@@ -25,7 +25,7 @@ class ControladorUsuariosTest {
 
     @Test
     void dadoUsuarioValido_cuandoAlta_entoncesUsuarioValido() {
-        Usuario nuevo = new Usuario(null, "Ricardo", "r@r.com", LocalDate.now(), true);
+        Usuario nuevo = new Usuario(null, "Pepelux", "pepelux@banana.com", LocalDate.now(), true);
         controladorUsuarios.alta(nuevo);
 
         assertThat(nuevo, notNullValue());

@@ -1,8 +1,7 @@
 package com.banana.bananawhatsapp.config;
 
-import com.banana.bananawhatsapp.persistencia.IUsuarioRepository;
-import com.banana.bananawhatsapp.persistencia.UsuarioInMemoryRepo;
-import com.banana.bananawhatsapp.persistencia.UsuarioJDBCRepo;
+import com.banana.bananawhatsapp.persistencia.*;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,5 +28,19 @@ public class RepoConfig {
     IUsuarioRepository crearUsuarioRepoInMemo(){
         UsuarioInMemoryRepo repo = new UsuarioInMemoryRepo();
         return repo;
+    }
+    @Bean
+    @Profile("prod")
+    IMensajeRepository crearMensajeRepoJDBC(){
+        MensajeJDBCRepo repoMen = new MensajeJDBCRepo();
+        repoMen.setDb_url(connUrl);
+        return repoMen;
+    }
+
+    @Bean
+    @Profile("dev")
+    IMensajeRepository crearMensajeRepoInMemo(){
+        MensajeInMemoryRepo repoMen = new MensajeInMemoryRepo();
+        return repoMen;
     }
 }

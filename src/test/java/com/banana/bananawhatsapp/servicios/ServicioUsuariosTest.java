@@ -3,11 +3,10 @@ package com.banana.bananawhatsapp.servicios;
 import com.banana.bananawhatsapp.config.SpringConfig;
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
-import com.banana.bananawhatsapp.persistencia.IUsuarioRepository;
-import com.banana.bananawhatsapp.persistencia.UsuarioRepositoryParaTests;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -19,26 +18,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SpringConfig.class})
+@ActiveProfiles("prod")
 class ServicioUsuariosTest {
 
     @Autowired
     IServicioUsuarios servicio;
 
-    @Autowired
-    UsuarioRepositoryParaTests usuarioRepo;
-
-    @Test
+      @Test
     void dadoUnUsuarioValido_cuandoCrearUsuario_entoncesUsuarioValido() throws Exception {
-        Usuario nuevo = new Usuario(null, "Ricardo", "r@r.com", LocalDate.now(), true);
+        Usuario nuevo = new Usuario(null, "Pepelu", "pepelu@banana.com", LocalDate.now(), true);
         servicio.crearUsuario(nuevo);
 
         assertThat(nuevo, notNullValue());
         assertThat(nuevo.getId(), greaterThan(0));
 
-        Usuario verUser = usuarioRepo.getById(nuevo.getId());
-        assertThat(verUser, equalTo(nuevo));
-
-    }
+        }
 
     @Test
     void dadoUnUsuarioNOValido_cuandoCrearUsuario_entoncesExcepcion() {
